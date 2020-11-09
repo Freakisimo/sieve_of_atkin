@@ -9,7 +9,7 @@ defmodule SieveOfAtkin.MixProject do
       description: "Generates prime numbers using the Sieve of Atkin algorithm.",
       package: package(),
       app: :sieve_of_atkin,
-      version: "0.1.0",
+      version: "1.0.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       source_url: @source_url,
