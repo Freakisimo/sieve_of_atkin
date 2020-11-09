@@ -26,56 +26,80 @@ defmodule SieveOfAtkin do
     first_possible_primes =
       Task.async(fn ->
         xy_pairs
-        |> Stream.map(fn {x, y} ->
+        |> Flow.from_enumerable()
+        |> Flow.map(fn {x, y} ->
           (4 * x * x) + (y * y)
         end)
-        |> Stream.filter(fn n ->
+        |> Flow.filter(fn n ->
           (n <= max_value) and (Integer.mod(n, 12) == 1 or Integer.mod(n, 12) == 5)
         end)
-        |> Enum.frequencies()
-        |> Enum.filter(fn {_n, freq} ->
+        |> Flow.partition()
+        |> Flow.reduce(fn -> %{} end, fn key, acc ->
+          case acc do
+            %{^key => value} -> %{acc | key => value + 1}
+            %{} -> Map.put(acc, key, 1)
+          end
+        end)
+        |> Flow.filter(fn {_n, freq} ->
           Integer.mod(freq, 2) == 1
         end)
-        |> Enum.map(fn {n, _freq} ->
+        |> Flow.map(fn {n, _freq} ->
           n
         end)
+        |> Enum.to_list()
       end)
 
     second_possible_primes =
       Task.async(fn ->
         xy_pairs
-        |> Stream.map(fn {x, y} ->
+        |> Flow.from_enumerable()
+        |> Flow.map(fn {x, y} ->
           (3 * x * x) + (y * y)
         end)
-        |> Stream.filter(fn n ->
+        |> Flow.filter(fn n ->
           (n <= max_value) and (Integer.mod(n, 12) == 7)
         end)
-        |> Enum.frequencies()
-        |> Enum.filter(fn {_n, freq} ->
+        |> Flow.partition()
+        |> Flow.reduce(fn -> %{} end, fn key, acc ->
+          case acc do
+            %{^key => value} -> %{acc | key => value + 1}
+            %{} -> Map.put(acc, key, 1)
+          end
+        end)
+        |> Flow.filter(fn {_n, freq} ->
           Integer.mod(freq, 2) == 1
         end)
-        |> Enum.map(fn {n, _freq} ->
+        |> Flow.map(fn {n, _freq} ->
           n
         end)
+        |> Enum.to_list()
       end)
 
     third_possible_primes =
       Task.async(fn ->
         xy_pairs
-        |> Stream.filter(fn {x, y} -> x > y end)
-        |> Stream.map(fn {x, y} ->
+        |> Flow.from_enumerable()
+        |> Flow.filter(fn {x, y} -> x > y end)
+        |> Flow.map(fn {x, y} ->
           (3 * x * x) - (y * y)
         end)
-        |> Stream.filter(fn n ->
+        |> Flow.filter(fn n ->
           (n <= max_value) and (Integer.mod(n, 12) == 11)
         end)
-        |> Enum.frequencies()
-        |> Enum.filter(fn {_n, freq} ->
+        |> Flow.partition()
+        |> Flow.reduce(fn -> %{} end, fn key, acc ->
+          case acc do
+            %{^key => value} -> %{acc | key => value + 1}
+            %{} -> Map.put(acc, key, 1)
+          end
+        end)
+        |> Flow.filter(fn {_n, freq} ->
           Integer.mod(freq, 2) == 1
         end)
-        |> Enum.map(fn {n, _freq} ->
+        |> Flow.map(fn {n, _freq} ->
           n
         end)
+        |> Enum.to_list()
       end)
 
     possible_primes =
