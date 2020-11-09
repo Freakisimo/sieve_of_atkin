@@ -10,7 +10,7 @@ defmodule SieveOfAtkin.MixProject do
       package: package(),
       app: :sieve_of_atkin,
       version: "0.1.0",
-      elixir: "~> 1.11",
+      elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       source_url: @source_url,
       deps: deps()
