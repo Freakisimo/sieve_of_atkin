@@ -35,8 +35,9 @@ defmodule SieveOfAtkin do
         |> Enum.filter(fn {_n, freq} ->
           Integer.mod(freq, 2) == 1
         end)
-        |> Map.new()
-        |> Map.keys()
+        |> Enum.map(fn {n, _freq} ->
+          n
+        end)
       end)
 
     second_possible_primes =
@@ -52,8 +53,9 @@ defmodule SieveOfAtkin do
         |> Enum.filter(fn {_n, freq} ->
           Integer.mod(freq, 2) == 1
         end)
-        |> Map.new()
-        |> Map.keys()
+        |> Enum.map(fn {n, _freq} ->
+          n
+        end)
       end)
 
     third_possible_primes =
@@ -70,8 +72,9 @@ defmodule SieveOfAtkin do
         |> Enum.filter(fn {_n, freq} ->
           Integer.mod(freq, 2) == 1
         end)
-        |> Map.new()
-        |> Map.keys()
+        |> Enum.map(fn {n, _freq} ->
+          n
+        end)
       end)
 
     possible_primes =
