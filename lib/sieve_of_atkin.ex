@@ -85,14 +85,15 @@ defmodule SieveOfAtkin do
 
     non_primes =
       possible_primes
-      |> Stream.flat_map(fn n ->
+      |> Flow.from_enumerable()
+      |> Flow.flat_map(fn n ->
         sq = n * n
 
         Stream.iterate(1, &(&1 + 1))
         |> Stream.map(&(&1 * sq))
         |> Stream.take_while(&(&1 <= max_value))
       end)
-      |> Stream.uniq()
+      |> Flow.uniq()
       |> MapSet.new()
 
     possible_primes
