@@ -7,6 +7,7 @@ defmodule SieveOfAtkin do
     raise "Can't compute negative primes"
   end
 
+  def generate_primes(n) when n <= 1, do: []
   def generate_primes(n) when n <= 2, do: [2]
   def generate_primes(n) when n <= 3, do: [2, 3]
   def generate_primes(n) when n <= 5, do: [2, 3, 5]
